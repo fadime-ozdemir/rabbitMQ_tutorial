@@ -1,4 +1,6 @@
 const amqp = require('amqplib/callback_api');
+const createAndSaveMessage = require("./database.js").createAndSaveMessage;
+
 amqp.connect('amqp://localhost:5672', function (error0, connection) {
         if (error0) {
             throw error0;
@@ -26,6 +28,7 @@ amqp.connect('amqp://localhost:5672', function (error0, connection) {
                 channel.consume(q.queue, function (msg) {
                     if (msg.content) {
                         console.log(" [x] %s", msg.content.toString());
+                        createAndSaveMessage(msg.content.toString());
                     }
                 }, {
                     noAck: true

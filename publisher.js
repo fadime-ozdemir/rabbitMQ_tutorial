@@ -1,7 +1,5 @@
 const amqp = require('amqplib/callback_api');
 const publisher = (msgFromClient)=> 
-
-    
     amqp.connect('amqp://localhost:5672', function(error0, connection) {
         if (error0) {
             throw error0;
@@ -24,7 +22,6 @@ const publisher = (msgFromClient)=>
         
         setTimeout(function() {
             connection.close();
-            // process.exit(0);
         }, 500);
     })
 
