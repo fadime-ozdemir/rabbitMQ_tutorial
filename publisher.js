@@ -1,5 +1,5 @@
 const amqp = require('amqplib/callback_api');
-const publisher = (msgFromClient)=> 
+const publisher = (msgFromClient)=> new Promise(resolve =>
     amqp.connect('amqp://localhost:5672', function(error0, connection) {
         if (error0) {
             throw error0;
@@ -22,8 +22,9 @@ const publisher = (msgFromClient)=>
         
         setTimeout(function() {
             connection.close();
+            resolve();
         }, 500);
     })
-
+)
 
 module.exports = publisher;
