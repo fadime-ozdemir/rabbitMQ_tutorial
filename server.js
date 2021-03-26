@@ -1,10 +1,8 @@
 const express = require('express');
 const app = express();
-var publisher = require('./publisher.js');
-var consumer = require('./consumer.js');
-var path = require("path")
+const publisher = require('./publisher.js');
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,16 +15,15 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/message", async (req, res, next) => {
-    await consumer().then(res.send("deneme")).then(next())
-}
-);
+app.get("/message", async (req, res) => {
+    res.sendFile(__dirname + "/message.html");
+});
 
 app.post("/message", function (req, res, next) {
     // post 
     publisher(req.body.message);
     next();
-}, (req, res) => res.redirect(req.path));
+}, (req, res) => res.redirect("/"));
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {

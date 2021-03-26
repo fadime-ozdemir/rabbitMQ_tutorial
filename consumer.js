@@ -1,7 +1,5 @@
 const amqp = require('amqplib/callback_api');
-const consumer = () => new Promise(resolve =>
-
-    amqp.connect('amqp://localhost:5672', function (error0, connection) {
+amqp.connect('amqp://localhost:5672', function (error0, connection) {
         if (error0) {
             throw error0;
         }
@@ -20,7 +18,8 @@ const consumer = () => new Promise(resolve =>
             }, function (error2, q) {
                 if (error2) {
                     throw error2;
-                }
+                };
+
                 console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
                 channel.bindQueue(q.queue, exchange, 'orange');
 
@@ -33,8 +32,4 @@ const consumer = () => new Promise(resolve =>
                 });
             });
         });
-    })
-
-)
-
-module.exports = consumer;
+    });
